@@ -19,8 +19,9 @@ class FoundVacanciesAdmin(admin.ModelAdmin):
         "name",
     ]
     list_filter = [
-        "name",
+        "search_request",
         "employer_responded",
+
     ]
 
 
