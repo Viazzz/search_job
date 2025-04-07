@@ -4,3 +4,4 @@ project/socet/
 project/db.sqlite3
 *pyc
 venv/
+set.txt
