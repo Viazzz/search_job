@@ -79,7 +79,7 @@ def find_vacancies(request):
             .drop_duplicates()
             .loc[lambda x: ~x.employer_id.isin(saved_employer_id)]
         )
-        employer_rating = utils.get_employer_rating(employer_rating[:20]) #добавь срез для теста
+        employer_rating = utils.get_employer_rating(employer_rating[:]) #добавь срез для теста
         df =(
             df.merge(employer_rating, how="left", on="employer_id")
             [columns]

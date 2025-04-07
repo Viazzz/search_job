@@ -14,8 +14,8 @@ server{
     listen 443 ssl;
     server_tokens off;
     server_name rg-ds;
-    ssl_certificate /code/ssl/search-job.online.crt;
-    ssl_certificate_key /code/ssl/search-job.online.key;
+    ssl_certificate /code/ssl/fullchain.pem;
+    ssl_certificate_key /code/ssl/privkey.pem;
     error_log    stderr warn;
     access_log   /dev/stdout main;
 
