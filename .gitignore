@@ -1,0 +1,7 @@
+project/.prod.env
+project/ssl/
+project/socet/
+project/db.sqlite3
+*pyc
+venv/
+test.txt
