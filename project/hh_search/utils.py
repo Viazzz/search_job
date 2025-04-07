@@ -40,7 +40,7 @@ def get_vacansies_or_403(search_request, page, access_token):
         "schedule": "remote",
         "page": page,
     }
-    params=urllib.urlencode(params)
+    params=urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
     response = requests.get(url, headers=headers, params=params)
     if response.status_code == 403:
         return response.status_code
