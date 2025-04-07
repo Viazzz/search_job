@@ -1,0 +1,20 @@
+<div class="col table-responsive">
+  <table class="table table-hover table-sm">
+    <thead class="table text-center">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Search request</th>
+        <th scope="col">Salary from</th>
+        <th scope="col">Salary to</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Snippet</th>
+        <th scope="col">Employer Name</th>
+        <th scope="col">Area name</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      {% include "partials/tables/infine_scroll.html" %}
+    </tbody>
+  </table>
+  {% include "partials/spinner/spinner.html" %}
+</div>

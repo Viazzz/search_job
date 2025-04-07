@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Vacancies list
+{% endblock %}
+
+{% block content %}
+<div class="container-flex p-3">
+    <div class="row">
+        <div class="col">
+            <select id="search_request" class="form-select"
+                {% comment %} name="search_request" {% endcomment %}
+                hx-get="{% url "work_search:vacancies_list" %}"
+                hx-trigger="change"
+                hx-target="#vacancies_list"
+                hx-swap="innerHTML"
+                hx-indicator="#indicator"
+                hx-vals='js:{
+                    search_request: $("#search_request").val(),
+                    select_blacklist: $("#select_blacklist").val(),
+                }'
+                >
+                {% include "partials/options/options.html" with elements=choices %}
+            </select>
+        </div>
+        <div class="col">
+            <select id="select_blacklist" class="form-select"
+                name="select_blacklist"
+                hx-get="{% url "work_search:vacancies_list" %}"
+                hx-trigger="change"
+                hx-target="#vacancies_list"
+                hx-swap="innerHTML"
+                hx-indicator="#indicator"
+                hx-vals='js:{
+                    search_request: $("#search_request").val(),
+                    select_blacklist: $("#select_blacklist").val(),
+                }'
+                >
+                <option value="">All vacancies</option>
+                <option value="False">White list</option>
+                <option value="True">Black list</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-11">
+            <input type="text" id="find_employer_name" class="form-control mt-3">
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn btn-success mt-3"
+            hx-get="{% url "work_search:find_employer_name" %}"
+            hx-target="#vacancies_list"
+            hx-vals='js:{
+                employer_name: $("#find_employer_name").val()
+            }'
+            >Find employer</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-3" id="vacancies_list">
+        {% include "partials/tables/vacancies_list_table.html" %}
+    </div>
+</div>
+{% endblock %}

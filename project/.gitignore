@@ -1,0 +1,6 @@
+.prod.env
+ssl/
+socet/
+db.sqlite3
+*pyc
+../venv/

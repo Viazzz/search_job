@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # environment:
+    #   - POSTGRES_DB=postgres
+    #   - POSTGRES_USER=postgres
+    #   - POSTGRES_PASSWORD=postgres
+    networks:
+      - django_app
+    env_file:
+      - ./.prod.env
+      
+      
+  django_app:
+    build: .
+    image: django_app
+    command: ["./wait-for-it.sh", "db:5432", "--",
+              "uwsgi", "--ini", "/code/config/uwsgi/uwsgi.ini"]
+    restart: always
+    volumes:
+      - .:/code
+    # environment:
+    #   - DJANGO_SETTINGS_MODULE=settings.variables.prod
+    #   - POSTGRES_DB=postgres
+    #   - POSTGRES_USER=postgres
+    #   - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
+    networks:
+      - django_app
+    env_file:
+      - ./.prod.env
+
+  nginx:
+    image: nginx:1.23.1
+    restart: always
+    volumes:
+      - ./config/nginx:/etc/nginx/templates
+      - .:/code
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - django_app
+
+volumes:
+  postgres_data:
+
+networks:
+  django_app:

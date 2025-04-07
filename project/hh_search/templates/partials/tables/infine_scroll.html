@@ -1,0 +1,24 @@
+{% for vacancy in vacancies %}
+    {% if forloop.last and vacancies.has_next %}
+        <tr id="tr_vacancies_table"
+            hx-get="{% url "work_search:infine_scroll_table" %}?page={{ vacancies.next_page_number }}"
+            hx-trigger="revealed"
+            hx-swap="afterend"
+            hx-indicator="#indicator"
+            hx-vals="js:{
+                'employer_name': $('#employer_name_filter').val(),
+            }"
+        >
+    {% else %}
+        <tr id="tr_vacancies_table">
+    {% endif %}
+        <td><a href="{{ vacancy.alternate_url }}" target="_blank">{{ vacancy.name }}</a></td>
+        <td>{{ vacancy.search_request }}</td>
+        <td>{{ vacancy.salary_from }}</td>
+        <td>{{ vacancy.salary_to }}</td>
+        <td>{{ vacancy.salary_currency }}</td>
+        <td>{{ vacancy.snippet_responsibility }}</td>
+        <td><a href="{{ vacancy.employer_alternate_url }}" target="_blank">{{ vacancy.employer_name }}</a></td>
+        <td>{{ vacancy.area_name }}</td>          
+    </tr>
+{% endfor %}

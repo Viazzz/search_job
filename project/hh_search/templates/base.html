@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/icons/bootstrap-icons.min.css' %}">
+    <title>
+      {% block title %}
+
+      {% endblock %}
+    </title>
+  </head>
+  <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
+    {% include "partials/navbar/navbar.html" %}
+    {% block content %}
+    {% endblock %}
+    
+
+    <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/htmx/htmx.min.js' %}"></script>
+    <script src="{% static 'js/jquery/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'js/echarts/echarts.min.js' %}"></script>
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>

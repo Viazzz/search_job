@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Find Vacancies
+{% endblock %}
+
+{% block content %}
+<div class="container-flex p-3">
+    <div class="row">
+        <div class="col-11">
+            <select id="search_request" class="form-select"
+                name="search_request"
+                hx-get="{% url "work_search:get_vacancies_list" %}"
+                hx-trigger="change"
+                hx-target="#vacancies_list"
+                hx-swap="innerHTML"
+                hx-indicator="#indicator"
+                >
+                {% include "partials/options/options.html" with elements=choices %}
+            </select>
+        </div>
+        <div class="col-1">
+            <button 
+                type="button" 
+                class="btn btn-success"
+                hx-get="{% url "work_search:find_vacancies" %}"
+                hx-vals="js:{
+                    'search_request': $('#search_request').val(),
+                }"
+                hx-target="#vacancies_list"
+                hx-indicator="#indicator"
+                hx-swap="innerHTML"
+                >Search
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-3">
+            <button 
+                type="button" 
+                class="btn btn-secondary"
+                hx-get="{% url "work_search:send_responses_to_vacancies" %}"
+                hx-vals="js:{
+                    'search_request': $('#search_request').val(),
+                }"
+                hx-target="this"
+                hx-indicator="#indicator"
+                hx-swap="none"
+                >Sent response to vacancies 
+            </button>
+        </div>
+    </div>
+    <hr>
+    <div class="row mt-3" id="vacancies_list">
+        {% include "partials/tables/vacancies_list_table.html" %}
+    </div>
+</div>
+{% endblock %}
+

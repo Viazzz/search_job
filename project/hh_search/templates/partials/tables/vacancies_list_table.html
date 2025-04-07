@@ -1,0 +1,56 @@
+{% include "partials/spinner/spinner.html" %}
+<div class="col">
+  <table class="table table-striped table-hover table-bordered table-sm">
+    <thead class="table text-center">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Salary from</th>
+        <th scope="col">Salary to</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Snippet</th>
+        <th scope="col">Blacklist</th>
+        <th scope="col">Employer</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Review count</th>
+        <th scope="col">Area name</th>
+        <th scope="col">Emp resp</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      {% for vacancy in vacancies %}
+        <tr>
+          <td><a href="{{ vacancy.alternate_url }}" target="_blank">{{ vacancy.name }}</a></td>
+          <td>{{ vacancy.salary_from }}</td>
+          <td>{{ vacancy.salary_to }}</td>
+          <td>{{ vacancy.salary_currency }}</td>
+          <td>{{ vacancy.snippet_responsibility }}</td>
+          <td>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" name="blacklist" role="switch" id="switchCheckBlacklist" {% if vacancy.blacklist %}checked{% endif %}
+                hx-trigger="change"
+                hx-get="{% url "work_search:change_blacklist" vacancy.pk %}"
+                hx-target="this"
+                hx-swap="none">
+              <label class="form-check-label" for="switchCheckBlacklist">Blacklist</label>
+            </div>
+          </td>
+          <td><a href="{{ vacancy.employer_alternate_url }}" target="_blank">{{ vacancy.employer_name }}</a></td>
+          <td>{{ vacancy.employer_rating }}</td>
+          <td>{{ vacancy.employer_review_count }}</td>
+          <td>{{ vacancy.area_name }}</td>
+          <td>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" name="employer_responded" role="switch" id="switchCheckResponded" {% if vacancy.employer_responded %}checked{% endif %}
+                hx-trigger="change"
+                hx-get="{% url "work_search:employer_responded" vacancy.pk %}"
+                hx-target="this"
+                hx-swap="none">
+              <label class="form-check-label" for="switchCheckResponded">Employer Responded</label>
+            </div>
+          </td>
+          
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

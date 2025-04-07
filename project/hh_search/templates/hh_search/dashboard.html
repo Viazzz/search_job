@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Dashboard
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <h1 class="text-center my-3">Dashboard</h1>
+      <hr />
+    </div>
+    <div class="row" id="bar_chart"></div>
+    <hr>
+    <div class="row">
+      <div class="col mb-3">
+        <div class="input-group has-validation">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <div class="form-floating is-invalid">
+            <input type="text" class="form-control" id="employer_name_filter" placeholder="Employer name"
+            hx-get="{% url "work_search:employer_filter_table" %}"
+            hx-trigger="keyup delay:0.4s changed"
+            hx-target="#vacancies_table"
+            hx-swap="innerHTML"
+            hx-vals="js:{
+              'employer_name': $('#employer_name_filter').val(),
+            }"
+            hx-indicator="#indicator"
+            >
+            <label for="employer_name_filter">Employer name filter</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" id="vacancies_table">
+      {% include "partials/tables/vacancies_list_table_dash.html" %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'hh_search/barChart.js' %}"></script>
+{% endblock %}
