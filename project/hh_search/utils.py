@@ -3,6 +3,7 @@ import requests
 from flatten_json import flatten
 import re
 import json
+import urllib
 
 
 columns = [
@@ -39,6 +40,7 @@ def get_vacansies_or_403(search_request, page, access_token):
         "schedule": "remote",
         "page": page,
     }
+    params=urllib.urlencode(params)
     response = requests.get(url, headers=headers, params=params)
     if response.status_code == 403:
         return response.status_code
