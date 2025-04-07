@@ -214,7 +214,7 @@ def dashboard(request):
     return render(request, "hh_search/dashboard.html", context)
 
 def get_bar_chart_data(request):
-    bar_chart_data = FoundVacancies.objects.values("search_request").annotate(total=Count("search_request"))
+    bar_chart_data = FoundVacancies.objects.filter(blacklist=False).values("search_request").annotate(total=Count("search_request"))
     bar_chart_data = (
         pd.DataFrame(bar_chart_data)
         .to_json(orient="split") 
