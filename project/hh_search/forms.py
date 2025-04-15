@@ -1,16 +1,28 @@
 from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Row, Column
 
 from django import forms
 
 from .models import FoundVacancies
 
 
-class SearchForm(forms.Form):
+class FoundVacancisForm(forms.ModelForm):
     choices = FoundVacancies.SearchRequest.choices
+    search_request = forms.ChoiceField(choices=choices, label="sdfsd")
 
-    search_request = forms.ChoiceField(choices=choices)
+    class Meta:
+        model = FoundVacancies
+        fields = {
+            "search_request",
+            "blacklist",
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_class = "form-inline"
+        self.helper.layout = Layout(
+            Row(
+                Column("search_request"),
+                Column("blacklist"),
+            ),
+        )

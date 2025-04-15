@@ -26,8 +26,6 @@ $.get("get_bar_chart_data/", function (data) {
             nameLocation: 'middle',
             nameGap: 50,
             nameTextStyle: {
-                // align: 'right',
-                // verticalAlign: 'top',
                 fontWeight: 'bold',
                 fontSize: 16
             }
@@ -46,7 +44,7 @@ $.get("get_bar_chart_data/", function (data) {
             }
         ],
         title: {
-            text: 'Count of vacancies',
+            text: 'Count of vacancies by search requests',
         },
     };
 

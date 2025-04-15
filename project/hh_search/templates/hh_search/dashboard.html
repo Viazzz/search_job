@@ -18,17 +18,17 @@
         <div class="input-group has-validation">
           <span class="input-group-text"><i class="bi bi-search"></i></span>
           <div class="form-floating is-invalid">
-            <input type="text" class="form-control" id="employer_name_filter" placeholder="Employer name"
+            <input type="text" class="form-control" id="search_field_dash" placeholder="Employer name"
             hx-get="{% url "work_search:employer_filter_table" %}"
             hx-trigger="keyup delay:0.4s changed"
             hx-target="#vacancies_table"
             hx-swap="innerHTML"
             hx-vals="js:{
-              'employer_name': $('#employer_name_filter').val(),
+              'search_field': $('#search_field_dash').val(),
             }"
             hx-indicator="#indicator"
             >
-            <label for="employer_name_filter">Employer name filter</label>
+            <label for="employer_name_filter">Start to type employer name or search request name</label>
           </div>
         </div>
       </div>

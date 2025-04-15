@@ -12,11 +12,9 @@ DATABASES = {
 }
 
 STATIC_URL = 'static/'
-# STATIC_ROOT = 'staticfiles/'
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static/' # Here
-# ]
-STATIC_ROOT = BASE_DIR / 'static'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static/'
+]
 
 INTERNAL_IPS = [
     "127.0.0.1",

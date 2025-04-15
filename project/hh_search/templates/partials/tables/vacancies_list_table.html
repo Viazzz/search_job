@@ -4,6 +4,7 @@
     <thead class="table text-center">
       <tr>
         <th scope="col">Name</th>
+        <th scope="col">Search request</th>
         <th scope="col">Salary from</th>
         <th scope="col">Salary to</th>
         <th scope="col">Currency</th>
@@ -20,6 +21,7 @@
       {% for vacancy in vacancies %}
         <tr>
           <td><a href="{{ vacancy.alternate_url }}" target="_blank">{{ vacancy.name }}</a></td>
+          <td>{{ vacancy.search_request }}</td>
           <td>{{ vacancy.salary_from }}</td>
           <td>{{ vacancy.salary_to }}</td>
           <td>{{ vacancy.salary_currency }}</td>
