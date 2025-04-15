@@ -35,7 +35,7 @@ class FoundVacancies(models.Model):
     negotiations = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["employer_rating", "employer_review_count", "-published_at"]        
+        ordering = ["-employer_rating", "-employer_review_count", "-published_at"]        
 
     def __str__(self):
         return self.name
