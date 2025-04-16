@@ -285,3 +285,16 @@ def employer_filter_table(request):
         "vacancies": vacancies_page,
     }
     return render(request, "partials/tables/vacancies_list_table_dash.html", context)
+
+
+@login_required
+def change_negotiations(request, pk):
+    vacancy = FoundVacancies.objects.get(pk=pk)
+    if request.GET.get("negotiations"):
+        vacancy.negotiations = True
+        vacancy.save()
+    else:
+        vacancy.negotiations = False
+        vacancy.save()
+    return HttpResponse("")
+

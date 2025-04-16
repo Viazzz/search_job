@@ -5,6 +5,7 @@
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Search request</th>
+        <th scope="col">Negotiations</th>
         <th scope="col">Salary from</th>
         <th scope="col">Salary to</th>
         <th scope="col">Currency</th>
@@ -22,6 +23,16 @@
         <tr>
           <td><a href="{{ vacancy.alternate_url }}" target="_blank">{{ vacancy.name }}</a></td>
           <td>{{ vacancy.search_request }}</td>
+          <td>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" name="negotiations" role="switch" id="switchCheckNegotiations" {% if vacancy.negotiations %}checked{% endif %}
+                hx-trigger="change"
+                hx-get="{% url "work_search:change_negotiations" vacancy.pk %}"
+                hx-target="this"
+                hx-swap="none">
+              <label class="form-check-label" for="switchCheckNegotiations"></label>
+            </div>
+          </td>
           <td>{{ vacancy.salary_from }}</td>
           <td>{{ vacancy.salary_to }}</td>
           <td>{{ vacancy.salary_currency }}</td>

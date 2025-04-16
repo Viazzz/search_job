@@ -19,5 +19,6 @@ urlpatterns = [
     path("get_bar_chart_data/", views.get_bar_chart_data, name="get_bar_chart_data"),
     path("infine_scroll_table/", views.infine_scroll_table, name="infine_scroll_table"),
     path("employer_filter_table/", views.employer_filter_table, name="employer_filter_table"),
+    path("change_negotiations/<int:pk>/", views.change_negotiations, name="change_negotiations"),
 
 ]
