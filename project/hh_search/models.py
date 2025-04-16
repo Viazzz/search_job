@@ -8,6 +8,7 @@ class FoundVacancies(models.Model):
         DJANGO = "django", "django"
         DATA_ANALYST = "data analyst", "data analyst"
         DATA_ENGINEER = "data engineer", "data engineer"
+        AIRFLOW = "airflow", "airflow"
 
 
     search_request = models.CharField(max_length=20, choices=SearchRequest.choices, default=SearchRequest.DJANGO)
