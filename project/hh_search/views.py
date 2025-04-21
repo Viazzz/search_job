@@ -15,7 +15,7 @@ from .models import FoundVacancies, UserTokenModel
 from . import utils, filters
 
 
-@login_required
+
 def refresh_user_token(user_id, refresh_token):
     url = "https://api.hh.ru/token"
     headers = {
