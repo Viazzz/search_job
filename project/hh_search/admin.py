@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import FoundVacancies, UserTokenModel
+from .models import FoundVacancies, UserTokenModel, ResumeId
 
 
 @admin.register(FoundVacancies)
@@ -29,4 +29,11 @@ class FoundVacanciesAdmin(admin.ModelAdmin):
 class UserTokerModelAdmin(admin.ModelAdmin):
     list_display = [
         "user",
+    ]
+
+@admin.register(ResumeId)
+class ResumeIdModelAdmin(admin.ModelAdmin):
+    list_display = [
+        "name",
+        "search_request",
     ]

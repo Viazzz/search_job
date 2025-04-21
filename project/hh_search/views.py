@@ -11,9 +11,8 @@ from django.db.models import Count, Q
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
-from .models import FoundVacancies, UserTokenModel
+from .models import FoundVacancies, UserTokenModel, ResumeId
 from . import utils, filters
-
 
 
 def refresh_user_token(user_id, refresh_token):
@@ -176,9 +175,24 @@ def employer_responded(request, pk):
 def send_responses_to_vacancies(request):
     search_request = request.GET.get("search_request")
     vacancies = FoundVacancies.objects.filter(
-        search_request=search_request, negotiations=False
+        search_request=search_request,
+        negotiations=False,
+        blacklist=False,
     )
-    vacancies.update(negotiations=True)
+    user_id = request.user.id
+    user_tokens = list(UserTokenModel.objects.filter(user=user_id).values())
+    access_token = user_tokens[0].get("access_token")
+    resume = list(ResumeId.objects.filter(search_request=search_request).values())[0]
+    resume_id = resume.get("resume_id")
+    resume_message = resume.get("message")
+
+    [
+        utils.send_response_to_employer(
+            access_token, vacancy.vacancies_id, resume_id, resume_message
+        )
+        for vacancy in vacancies
+    ]
+
     return HttpResponse("")
 
 
@@ -297,4 +311,3 @@ def change_negotiations(request, pk):
         vacancy.negotiations = False
         vacancy.save()
     return HttpResponse("")
-

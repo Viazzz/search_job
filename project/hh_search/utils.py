@@ -109,3 +109,20 @@ def extract_raiting_from_html(employer_id):
     text = json.loads(text[0]) if text else {}
     print(f"{url=}, {text=}")
     return text
+
+
+def send_response_to_employer(access_token, vacancy_id, resume_id, message):
+    url = f"https://api.hh.ru/negotiations"
+    headers = {
+        "User-Agent": "job search (jobsearch@mail.com)",
+        "Authorization": f"Bearer {access_token}",
+    }
+    params = {
+        "vacancy_id": vacancy_id,
+        "resume_id": resume_id,
+        "message": message
+    }
+    response = requests.post(
+        url, headers=headers, params=params,
+    )
+    return response.status_code
