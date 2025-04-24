@@ -4,11 +4,11 @@ from django.db import models
 class FoundVacancies(models.Model):
 
     class SearchRequest(models.TextChoices):
-        PYTHON = "python", "python"
         DJANGO = "django", "django"
-        DATA_ANALYST = "data analyst", "data analyst"
-        DATA_ENGINEER = "data engineer", "data engineer"
         AIRFLOW = "airflow", "airflow"
+        DATA_ENGINEER = "data engineer", "data engineer"
+        DATA_ANALYST = "data analyst", "data analyst"
+        PYTHON = "python", "python"
 
 
     search_request = models.CharField(max_length=20, choices=SearchRequest.choices, default=SearchRequest.DJANGO)

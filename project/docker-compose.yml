@@ -4,31 +4,21 @@ services:
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    # environment:
-    #   - POSTGRES_DB=postgres
-    #   - POSTGRES_USER=postgres
-    #   - POSTGRES_PASSWORD=postgres
     networks:
       - django_app
     env_file:
       - ./.prod.env
-      
-      
+
   django_app:
     build: .
     image: django_app
-    command: ["./wait-for-it.sh", "db:5432", "--",
-              "uwsgi", "--ini", "/code/config/uwsgi/uwsgi.ini"]
+    command: ["./wait-for-it.sh", "db:5432", "--", "uwsgi", "--ini", "/code/config/uwsgi/uwsgi.ini"]
     restart: always
     volumes:
       - .:/code
-    # environment:
-    #   - DJANGO_SETTINGS_MODULE=settings.variables.prod
-    #   - POSTGRES_DB=postgres
-    #   - POSTGRES_USER=postgres
-    #   - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
+      - redis
     networks:
       - django_app
     env_file:
@@ -46,8 +36,58 @@ services:
     networks:
       - django_app
 
+  redis:
+    image: redis:7-alpine
+    networks:
+      - django_app
+
+  celery_worker:
+    # build: .
+    image: django_app
+    command: ["/usr/bin/bash","-c", "celery -A settings worker -l INFO"] 
+    volumes:
+      - .:/code
+    env_file:
+      - ./.prod.env
+    depends_on:
+      - django_app
+      - redis
+      - db
+    networks:
+      - django_app
+
+  celery_beat:
+    # build: .
+    user: root
+    image: django_app
+    command: ./bash_scripts/beat-start.sh
+    volumes:
+      - .:/code
+    env_file:
+      - ./.prod.env
+    depends_on:
+      - redis
+      - db
+    networks:
+      - django_app
+
+  flower:
+    # build: .
+    image: django_app
+    command: ./bash_scripts/flower-start.sh
+    volumes:
+      - .:/code
+    env_file:
+      - ./.prod.env
+    depends_on:
+      - redis
+      - db
+    networks:
+      - django_app
+
 volumes:
   postgres_data:
+
 
 networks:
   django_app:

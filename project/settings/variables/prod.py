@@ -3,12 +3,10 @@ from .base import *
 import os
 
 
-DEBUG = False
-
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 ADMINS = [
-  ('Molodtsov A', 'aleksandr.molodtsov@corphn.com')
+  ('Molodtsov A', 'viaz@bk.ru')
 ]
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")

@@ -5,6 +5,8 @@ import re
 import json
 import urllib
 
+from .models import UserTokenModel
+
 
 columns = [
     "search_request",
@@ -126,3 +128,27 @@ def send_response_to_employer(access_token, vacancy_id, resume_id, message):
         url, headers=headers, params=params,
     )
     return response.status_code
+
+
+def refresh_user_token(user_id, refresh_token):
+    url = "https://api.hh.ru/token"
+    headers = {
+        "User-Agent": "job search (jobsearch@mail.com)",
+    }
+    params = {
+        "refresh_token": f"{refresh_token}",
+        "grant_type": "refresh_token",
+    }
+    response = requests.post(url, params=params, headers=headers)
+    if response.status_code == 200:
+        response = response.json()
+        access_token = response.get("access_token")
+        refresh_token = response.get("refresh_token")
+
+        UserTokenModel.objects.filter(user=user_id).update(
+            access_token=access_token, refresh_token=refresh_token
+        )
+        obj = list(UserTokenModel.objects.filter(user=user_id).values())
+        return obj
+    else:
+        return response.text

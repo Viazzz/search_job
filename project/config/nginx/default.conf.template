@@ -30,4 +30,8 @@ server{
     location /media/ {
         alias /code/media/;
     }
+
+    location /flower/ {
+        proxy_pass http://flower:5555;
+    }
 }
