@@ -113,6 +113,6 @@ CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND", "redis://127.0.0.1:6379
 CELERY_BEAT_SCHEDULE = {
     "sample_task": {
         "task": "find vacancies by scedule",
-        "schedule": crontab(hour=8, minute=0),
+        "schedule": crontab(hour=7, minute=10),
     },
 }
