@@ -52,7 +52,7 @@ def find_vacancies(user_id=1, search_request="django"):
     df = (
         df.merge(employer_rating, how="left", on="employer_id")[columns]
         .loc[
-            lambda x: (x.employer_rating > 4)
+            lambda x: (x.employer_rating >= 3)
             & (x.employer_review_count > 10)
             & (~x.id.isin(saved_id.vacancies_id))
         ]
