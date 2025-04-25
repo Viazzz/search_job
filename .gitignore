@@ -2,6 +2,7 @@ project/.prod.env
 project/ssl/
 project/socet/
 project/db.sqlite3
+project/celerybeat-schedule
 *pyc
 venv/
 set.txt
